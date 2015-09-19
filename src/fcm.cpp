@@ -1,9 +1,10 @@
-#include"fcm.h"
 #include<iostream>
-#include<math.h>
+#include<cstdlib>
+#include<cmath>
 #include<ctime>
-#include<stdlib.h>
 using namespace std;
+
+#include "fcm.h"
 
 fcm::fcm(int iteration_number,
         int num_clasters,
@@ -154,7 +155,7 @@ void fcm::calculate()
 			{
 				double t3=0.0;
 
-				if(D[i][j]=0.0) 
+				if(D[i][j]==0.0) 
 					U[i][j]=1.0;
 				else 
 					for(int z=0;z<num_clasters;z++)

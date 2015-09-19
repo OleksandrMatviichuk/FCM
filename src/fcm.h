@@ -25,19 +25,21 @@ protected:
 	void set_ones_matrix(double **matrix, int size_f, int size_s);
 
 private:
-	int num_clasters;           //number clasters 
-	double **data;              //data matrix
-	double **V;                 //matrix center point
-	double **U;                 //random matrix
-	double **D;                 //distance matrix	
+	int iteration_number; 
+	int num_clasters; 
 	int num_vectors;
 	int len_vectors; 
-	int iteration_number; 
+
 	//memory data
 	//saves not free memory
 	int old_num_vect;
 	int old_num_clas;
 	int old_len_vect;
+
+	double **data;              //data matrix
+	double **V;                 //matrix center point
+	double **U;                 //random matrix
+	double **D;                 //distance matrix	
 };
 
 
