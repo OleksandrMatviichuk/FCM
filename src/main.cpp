@@ -17,10 +17,10 @@ int main()
 	
 	obj->set_iteration_number(50);
 	obj->set_clasters_number(2);
-	// next line - segmentation fault factor!!!
 	obj->set_data_matrix(X,n,k);
 
 	obj->calculate();
+
 	obj->show_data_matrix();
 	obj->show_rand_matrix();
 	obj->show_distance_matrix();
