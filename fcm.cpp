@@ -175,27 +175,52 @@ void fcm::set_ones_matrix(double **matrix, int size_f, int size_s)
 	for(int i=0;i<size_f;i++)
 	{
 		double r=1.0;
-		for(int j=0;j<size_s;j++)
+		for(int j=0;j<size_s-1;j++)
 			{
 				matrix[i][j]=double(rand()%int(r*1000))/1000.0;
 				r=r-matrix[i][j];
 			}
+		matrix[i][size_s-1]=r;
 	}
 }
 
 void fcm::show_data_matrix()const
 {
 	cout<<"\ninput data matrix"<<endl;
+	for(int i=0;i<old_num_vect;i++)
+	{
+		for(int j=0;j<old_len_vect;j++)
+			cout<<data[i][j]<<" ";
+		cout<<endl;
+	}	
 }
 void fcm::show_rand_matrix()const
 {
 	cout<<"\nrandomise matrix"<<endl;
+	for(int i=0;i<old_num_vect;i++)
+	{
+		for(int j=0;j<old_num_clas;++j)
+			cout<<U[i][j]<<" ";
+		cout<<endl;
+	}
 }
 void fcm::show_distance_matrix()const
 {
 	cout<<"\n distance matrix"<<endl;
+	for(int i=0;i<old_num_vect;i++)
+	{
+		for(int j=0;j<old_num_clas;++j)
+		cout<<D[i][j]<<" ";
+	cout<<endl;
+	}
 }
 void fcm::show_centr_matrix()const
 {
 	cout<<"\n matrix with central point"<<endl;
+	for(int i=0;i<old_num_clas;i++)
+	{
+		for(int j=0;j<old_len_vect;++j)
+			cout<<V[i][j]<<" ";
+		cout<<endl;
+	}
 }
