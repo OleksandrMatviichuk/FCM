@@ -5,49 +5,55 @@
 #include<stdlib.h>
 using namespace std;
 
-fcm::fcm()
+fcm::fcm(int iteration_number,
+        int num_clasters,
+        int num_vectors,
+        int len_vectors, 
+        int old_num_vect, 
+        int old_num_clas,
+        int old_len_vect) : iteration_number(iteration_number)
+                                  , num_clasters(num_clasters)
+                                  , num_vectors(num_vectors)
+                                  , len_vectors(len_vectors)
+                                  , old_num_vect(old_num_vect)
+                                  , old_num_clas(old_num_clas)
+                                  , old_len_vect(old_len_vect)
 {
-	iteration_number=50;
-	num_clasters=1;
-	num_vectors=1;
-	len_vectors=1;
-	old_num_vect=1;
-	old_num_clas=1;
-	old_len_vect=1;
+	data = new double*[num_vectors];
+	for (int i=0; i<num_vectors; i++)
+		data[i] = new double[len_vectors];
 
-	data=new double*[num_vectors];
-	for(int i=0;i<num_vectors;i++)
-		data[i]=new double[len_vectors];
-		//matrix centers
-	V=new double*[num_clasters];
-		for(int i=0;i<num_clasters;i++)
-			V[i]=new double[len_vectors];
-		//matrix partition
-	U=new double*[num_vectors];
-		for(int i=0;i<num_vectors;++i)
-			U[i]=new double[num_clasters];
-		//matrix distance
-	D=new double*[num_vectors];
-		for(int i=0;i<num_vectors;i++)
-			D[i]=new double[num_clasters];
-	
+	//matrix centers
+	V = new double*[num_clasters];
+	for (int i=0; i<num_clasters; i++)
+		V[i] = new double[len_vectors];
+
+	//matrix partition
+	U = new double*[num_vectors];
+	for (int i=0; i<num_vectors; ++i)
+		U[i] = new double[num_clasters];
+
+	//matrix distance
+	D = new double*[num_vectors];
+	for (int i=0; i<num_vectors; i++)
+		D[i] = new double[num_clasters];
 }
 
 fcm::~fcm()
 {
-	for(int i=0;i<num_vectors;i++)
+	for(int i=0; i<num_vectors; i++)
 		delete [] data[i];
 	delete [] data;
 
-	for(int i=0;i<old_num_clas;i++)
+	for(int i=0; i<old_num_clas; i++)
 		delete [] V[i];
 	delete [] V;
 
-	for(int i=0;i<old_num_vect;i++)
+	for(int i=0; i<old_num_vect; i++)
 		delete [] U[i];
 	delete [] U; 
 
-	for(int i=0;i<old_num_vect;i++)
+	for(int i=0; i<old_num_vect; i++)
 		delete [] D[i];
 	delete [] D;
 }
@@ -55,7 +61,7 @@ fcm::~fcm()
 
 void fcm::set_clasters_number(int claster)
 {
-	num_clasters=claster;
+	num_clasters = claster;
 }
 
 
@@ -81,7 +87,7 @@ void fcm::set_data_matrix(double** dat, const int n, const int l)
 
 	    data = new double*[num_vectors];
 	    for (int i=0; i < num_vectors; i++) 
-		data[i] = new double[len_vectors];
+		    data[i] = new double[len_vectors];
 	}
 
 	for(int i=0;i<num_vectors;i++)
@@ -149,24 +155,24 @@ void fcm::calculate()
 			for(int i=0;i<num_clasters;i++)
 			{
 				double t3=0.0;
+
 				if(D[i][j]=0.0) 
 					U[i][j]=1.0;
 				else 
 					for(int z=0;z<num_clasters;z++)
 						t3=t3+D[i][j]*D[i][j]/(D[i][z]*D[i][z]);
-U[i][j]=1.0/t3;
+                U[i][j]=1.0/t3;
 			}
 		}
-	count++;		
+        count++;		
 	}
 
 	//end algorithm cycle
-
 }
 
 void fcm::set_iteration_number(int s)
 {
-	iteration_number=s;
+	iteration_number = s;
 }
 
 void fcm::set_ones_matrix(double **matrix, int size_f, int size_s)
@@ -176,15 +182,16 @@ void fcm::set_ones_matrix(double **matrix, int size_f, int size_s)
 	{
 		double r=1.0;
 		for(int j=0;j<size_s-1;j++)
-			{
-				matrix[i][j]=double(rand()%int(r*1000))/1000.0;
-				r=r-matrix[i][j];
-			}
+		{
+            matrix[i][j]=double(rand()%int(r*1000))/1000.0;
+            r=r-matrix[i][j];
+		}
 		matrix[i][size_s-1]=r;
 	}
 }
 
-void fcm::show_data_matrix()const
+// ********SHOW METHODS BLOCK********* //
+void fcm::show_data_matrix() const
 {
 	cout<<"\ninput data matrix"<<endl;
 	for(int i=0;i<old_num_vect;i++)
@@ -224,3 +231,4 @@ void fcm::show_centr_matrix()const
 		cout<<endl;
 	}
 }
+
