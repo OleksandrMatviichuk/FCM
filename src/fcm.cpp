@@ -8,16 +8,14 @@ using namespace std;
 fcm::fcm(int iteration_number,
         int num_clasters,
         int num_vectors,
-        int len_vectors, 
-        int old_num_vect, 
-        int old_num_clas,
-        int old_len_vect) : iteration_number(iteration_number)
+        int len_vectors 
+			) : iteration_number(iteration_number)
                                   , num_clasters(num_clasters)
                                   , num_vectors(num_vectors)
                                   , len_vectors(len_vectors)
-                                  , old_num_vect(old_num_vect)
-                                  , old_num_clas(old_num_clas)
-                                  , old_len_vect(old_len_vect)
+                                  , old_num_vect(num_vectors)
+                                  , old_num_clas(num_clasters)
+                                  , old_len_vect(len_vectors)
 {
 	data = new double*[num_vectors];
 	for (int i=0; i<num_vectors; i++)

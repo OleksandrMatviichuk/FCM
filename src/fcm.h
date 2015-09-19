@@ -8,9 +8,7 @@ public:
         , int num_clasters = 1
         , int num_vectors = 1
         , int len_vectors = 1
-        , int old_num_vect = 1
-        , int old_num_clas = 1
-        , int old_len_vect = 1);
+        );
 	void set_clasters_number(int claster);
 	void set_data_matrix(double** dat, const int n, const int l);
 	void set_iteration_number(int n); 
@@ -36,6 +34,7 @@ private:
 	int len_vectors; 
 	int iteration_number; 
 	//memory data
+	//saves not free memory
 	int old_num_vect;
 	int old_num_clas;
 	int old_len_vect;
