@@ -2,11 +2,9 @@
 
 #include"file.h"
 
-file_class::file_class():num(0),
-			 len(0)
-{
-	data=NULL;
-}
+file_class::file_class() : num(0),
+                            len(0), 
+                         data(nullptr) { }
 
 file_class::~file_class()
 {
@@ -17,10 +15,10 @@ file_class::~file_class()
 		delete [] data;
 	}
 }
-bool file_class::read_data(string& name/* read flags*/)
+bool file_class::read_data(string &name/* read flags*/)
 {
 	ifstream file(name.data());
-	if(!file.is_open())// file exist&
+	if(!file.is_open())// file exist
 	{
 		//read data block
 		//end read date block
@@ -29,10 +27,9 @@ bool file_class::read_data(string& name/* read flags*/)
 	}	
 
 	return false;
-
 }
 
-double** file_class::get_data(int &n, int&l)
+double** file_class::get_data(int &n, int &l)
 {
 //return sizes data
 	n=num;
@@ -49,5 +46,4 @@ double** file_class::get_data(int &n, int&l)
 		return tmp;
 	}
 	return NULL;
-	
 }
