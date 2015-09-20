@@ -17,6 +17,7 @@ private:
 	int num;		//number vectors
 	int len;		//lenght vectors
 	bool data_readed;	//matrix=NULL?
+
 };
 
 #endif

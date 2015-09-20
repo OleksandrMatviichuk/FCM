@@ -1,11 +1,14 @@
 #include<fstream>
-
+#include<iostream>
+#include<vector>
+using namespace std;
 #include"file.h"
 
 file_class::file_class():num(0),
-			 len(0)
+			 len(0),
+			 data_readed(0),
+			data(nullptr)
 {
-	data=NULL;
 }
 
 file_class::~file_class()
@@ -20,11 +23,31 @@ file_class::~file_class()
 bool file_class::read_data(string& name/* read flags*/)
 {
 	ifstream file(name.data());
-	if(!file.is_open())// file exist&
+	if(file.is_open())// file exist&
 	{
-		//read data block
-		//end read date block
-		file.close();
+		//***************READ DATA BLOCK
+		vector<string> fdata;//vector for reading data with file
+		string tmp;//temp variable for save current string
+		
+		cout<<"is_open complete"<<endl;
+		while(getline(file,tmp))//read all string in file
+		{
+			fdata.push_back(tmp);
+		}
+		cout<<"data read complete"<<endl;
+		//***************END READ DATA BLOCK
+		file.close();//close file
+		//***************DEPEND MEMORY BLOCK
+		/*num=fdata.size;
+		data=new double*[num];
+		*/
+		//***************END DEPEND MEMORY BLOCK
+		//******************PARSING DATA BLOCK
+		for(vector<string>::iterator it=fdata.begin();it!= fdata.end(); ++it)
+		cout<<*it<<endl;
+		//******************END PARSING DATA BLOCK
+
+
 		return true;
 	}	
 
