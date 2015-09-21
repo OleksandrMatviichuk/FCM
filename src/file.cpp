@@ -37,12 +37,12 @@ bool file_class::read_data(string& name,char point/* read flags*/)
 		vector<string> fdata;//vector for reading data with file
 		string tmp;//temp variable for save current string
 		
-		cout<<"is_open complete"<<endl;
+		//cout<<"is_open complete"<<endl;
 		while(getline(file,tmp))//read all string in file
 		{
 			fdata.push_back(tmp);
 		}
-		cout<<"data read complete"<<endl;
+		//cout<<"data read complete"<<endl;
 		//***************END READ DATA BLOCK
 		file.close();//close file
 		//***************DEPEND MEMORY BLOCK

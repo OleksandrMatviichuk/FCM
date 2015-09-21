@@ -32,13 +32,12 @@ void menu()
 	setings.iteration_number=50;
 	char command[10];
 	int i;
-
+	system("clear");//clear console
 	do
 	{
-	//system("clear");//clear console
 	cin.ignore();
 	cout<<"----------------MENU----------------"<<endl;
-	cout<<"1. load data with data"<<endl;
+	cout<<"1. load data with file"<<endl;
 	cout<<"2. calculate "<<endl;
 	cout<<"3. show result"<<endl;
 	cout<<"4. change setings"<<endl;
@@ -95,7 +94,21 @@ void menu()
 			}
 		case 4:
 			{
-				
+				char tmp[10];
+				cout<<"input number iteration ( now "<<setings.iteration_number<<"): ";
+				cin.getline(tmp,10);
+				if(atoi(tmp)!=0)
+					setings.iteration_number=atoi(tmp);
+				//cout<<setings.iteration_number;	
+				cout<<"input number claster ( now "<<setings.number_claster<<"): ";
+				cin.getline(tmp,10);
+				if(atoi(tmp)!=0)
+					setings.number_claster=atoi(tmp);
+				//setings point between number
+				/*cout<<"input point between number ( now ' "<<setings.point<<"'): ";
+				cin.getline(tmp,10);
+				if(tmp[0]!='\n')
+					setings.point=tmp[0];*/
 				break;
 			}
 		case 5:
