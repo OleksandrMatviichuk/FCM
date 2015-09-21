@@ -1,35 +1,113 @@
 #include<iostream>
-
+#include<string>
+#include<stdlib.h>
+using namespace std;
 #include"fcm.h"
+#include"file.h"
+
+void menu();
 int main()
 {
-	//test data;
-	const int n=4, k=3;
-	double **X=new double*[n];
-	for(int i=0;i<n;i++)
-	X[i]=new double[k];
-	X[0][0]=1.0; X[0][1]=1.0; X[0][2]=0.0;
-	X[1][0]=0.0; X[1][1]=1.0; X[1][2]=1.0;
-	X[2][0]=1.2; X[2][1]=0.9; X[2][2]=0.1;
-	X[3][0]=0.1; X[3][1]=1.1; X[3][2]=0.95;
-
-	fcm *obj=new fcm();
-	
-	obj->set_iteration_number(50);
-	obj->set_clasters_number(2);
-	obj->set_data_matrix(X,n,k);
-
-	obj->calculate();
-
-	obj->show_data_matrix();
-	obj->show_rand_matrix();
-	obj->show_distance_matrix();
-	obj->show_centr_matrix();
-
-	delete obj;
-	for(int i=0;i<n;i++)
-		delete [] X[i];
-	delete [] X;
-
+	menu();
 	return 0;
+	
+}
+struct Setings
+{
+	int iteration_number;
+	int number_claster;
+	string filename;
+	char point;
+};
+void menu()
+{
+//***********************Create work object block
+	Setings setings;
+	fcm *FCM=new fcm();
+	file_class *file=new file_class();
+//**********************End block create work object
+	//start setings initialise
+	setings.point=',';
+	setings.number_claster=2;
+	setings.iteration_number=50;
+	char command[10];
+	int i;
+
+	do
+	{
+	//system("clear");//clear console
+	cin.ignore();
+	cout<<"----------------MENU----------------"<<endl;
+	cout<<"1. load data with data"<<endl;
+	cout<<"2. calculate "<<endl;
+	cout<<"3. show result"<<endl;
+	cout<<"4. change setings"<<endl;
+	cout<<"5. exit"<<endl;
+	cout<<"change number command: ";
+	cin.getline(command,10);
+	i=atoi(command);
+
+	switch(i)
+	{
+		case 1:
+			{
+				cout<<"input name file: ";
+				cin>>setings.filename;
+				if(file->read_data(setings.filename),setings.point)
+					cout<<"download complete"<<endl;
+				else
+					cout<<"download failed"<<endl;
+				break;
+			}
+		case 2:
+			{
+				int tmp_n;
+				int tmp_l;
+// WARNING function return new double matrix, and depended memory not free in destructor
+				double **tmp_data;
+				tmp_data=file->get_data(tmp_n, tmp_l);
+				FCM->set_data_matrix(tmp_data,tmp_n,tmp_l);
+				FCM->set_iteration_number(setings.iteration_number);
+				FCM->set_clasters_number(setings.number_claster);
+				FCM->calculate();
+				break;
+			}
+		case 3:
+			{
+				char tmp='n';
+				cout<<"show distance matrix (y/n)?"<<endl;
+				cin>>tmp;
+				if(tmp=='y')
+					FCM->show_distance_matrix();
+				cout<<"show input data matrix (y/n)?"<<endl;
+				cin>>tmp;
+				if(tmp=='y')
+					FCM->show_data_matrix();
+				cout<<"show matrix with centr(y/n)?"<<endl;
+				cin>>tmp;
+				if(tmp=='y')
+					FCM->show_centr_matrix();
+				cout<<"show random ones matrix(y/n)?"<<endl;
+				cin>>tmp;
+				if(tmp=='y')
+					FCM->show_rand_matrix();
+				break;
+			}
+		case 4:
+			{
+				
+				break;
+			}
+		case 5:
+				cout<<"Good luck"<<endl;
+				break;
+		default : 
+				cout<<"incorect input, please input number in interval 1..5"<<endl;
+				break;
+	}
+	}while(i!=5);
+//*********************clear memory block
+	delete FCM;
+	delete file;
+//*********************end clear memory block
 }

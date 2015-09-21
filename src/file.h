@@ -10,7 +10,7 @@ public:
 	file_class();
 	~file_class();
 	bool read_data(string & name,char point= ',');	//inpun name file with data and read they
-	double** get_data(int&n, int&l);//return new data matrix
+	double** get_data(int&n, int&l);//return data matrix
 	
 private:
 	double** data;		// matrix width data in file
