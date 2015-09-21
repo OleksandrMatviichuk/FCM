@@ -9,7 +9,7 @@ class file_class
 public:
 	file_class();
 	~file_class();
-	bool read_data(string & name);	//inpun name file with data and read they
+	bool read_data(string & name,char point= ',');	//inpun name file with data and read they
 	double** get_data(int&n, int&l);//return new data matrix
 	
 private:

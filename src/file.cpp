@@ -1,5 +1,6 @@
 #include<fstream>
 #include<iostream>
+#include<math.h>
 #include<vector>
 using namespace std;
 #include"file.h"
@@ -7,7 +8,7 @@ using namespace std;
 file_class::file_class():num(0),
 			 len(0),
 			 data_readed(0),
-			data(nullptr)
+			data(NULL)
 {
 }
 
@@ -20,10 +21,10 @@ file_class::~file_class()
 		delete [] data;
 	}
 }
-bool file_class::read_data(string& name/* read flags*/)
+bool file_class::read_data(string& name,char point/* read flags*/)
 {
 	ifstream file(name.data());
-	if(file.is_open())// file exist&
+	if(file.is_open())// file exist?
 	{
 		//***************READ DATA BLOCK
 		vector<string> fdata;//vector for reading data with file
@@ -38,13 +39,54 @@ bool file_class::read_data(string& name/* read flags*/)
 		//***************END READ DATA BLOCK
 		file.close();//close file
 		//***************DEPEND MEMORY BLOCK
-		/*num=fdata.size;
-		data=new double*[num];
-		*/
+		num=fdata.size();	//save number rows in matrix
+		data=new double*[num];	//create depends in memory
+		//find number numbers
+		tmp=fdata.front();
+		int count=1;// counter for calculate number in string
+		for(string::iterator it=tmp.begin();it!=tmp.end();it++)
+		{
+			if(*it==point)
+				count++;
+		}
+		for(int i=0;i<num;i++)
+			data[i]=new double[count];
+		len=count;
 		//***************END DEPEND MEMORY BLOCK
 		//******************PARSING DATA BLOCK
+		int curr_str=0;
 		for(vector<string>::iterator it=fdata.begin();it!= fdata.end(); ++it)
-		cout<<*it<<endl;
+		{
+			tmp=*it;//read current row for parsing
+			int current_number=0;
+			bool dot=false;
+			int num_dot=0;
+			double number=0.0f;
+			for(string::iterator is=tmp.begin();is!=tmp.end();is++)
+			{
+				
+				if(*is>='0' && *is<='9')
+				{
+					number=number*10+(*is-48);//48- index 0 in ASCII table
+					if(dot)
+						num_dot++;
+				}
+				else if(*is=='.')
+					dot=true;
+				if(*is==point)
+				{
+					data[curr_str][current_number]=number/pow(10.0,num_dot);
+					number=0.0f;
+					dot=false;
+					num_dot=0;
+					current_number++;
+				}
+				data[curr_str][current_number]=number/pow(10.0,num_dot);
+				
+			}		
+			curr_str++;
+		}
+
 		//******************END PARSING DATA BLOCK
 
 
