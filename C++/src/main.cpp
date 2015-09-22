@@ -35,7 +35,6 @@ void menu()
 	system("clear");//clear console
 	do
 	{
-	cin.ignore();
 	cout<<"----------------MENU----------------"<<endl;
 	cout<<"1. load data with file"<<endl;
 	cout<<"2. calculate "<<endl;
@@ -43,6 +42,8 @@ void menu()
 	cout<<"4. change setings"<<endl;
 	cout<<"5. exit"<<endl;
 	cout<<"change number command: ";
+	cin.clear();	// crear flags
+	cin.sync();	//clear chars in stream 
 	cin.getline(command,10);
 	i=atoi(command);
 
