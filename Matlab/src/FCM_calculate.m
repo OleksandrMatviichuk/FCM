@@ -1,5 +1,6 @@
-function [Rand_matrix, Centr_matrix, Dist_matrix]=FCM_calculate(data_matrix,num_claster,num_iter)
+function [Centr_matrix,Rand_matrix]=FCM_calculate(data_matrix,num_claster,num_iter)
 %calculate size data matrix
+data_matrix=data_matrix';
 [S_x, S_y]=size(data_matrix);
 %create normalised random matrix
 Rand_matrix=rand(num_claster,S_x);
@@ -14,7 +15,7 @@ for count = 0:num_iter;
         for z = 1:S_y;
             t1 = 0.0;
             t2 = 0.0;
-            for i = z:S_x
+            for i = 1:S_x
                 t1 = t1 + Rand_matrix(i,j) * Rand_matrix(i,j) * data_matrix(i,z);
                 t2 = t2 + Rand_matrix(i,j) * Rand_matrix(i,j);
             end;
@@ -36,7 +37,7 @@ for count = 0:num_iter;
                     t3 = t3 + (Dist_matrix(i,j) * Dist_matrix(i,j))/(Dist_matrix(i,z)*Dist_matrix(i,z));
                 end;
             end
-                
+            Rand_matrix(i,j)=1.0/t3;    
         end;
     end;
 end;
